@@ -237,7 +237,7 @@
 
     <main class="products-section">
         <div id="products-container" class="products-grid" style="display: none;">
-            </div>
+        </div>
     </main>
 
     <footer>
@@ -245,19 +245,31 @@
     </footer>
 
     <script>
-        // הקישור החדש והמעודכן שסיפקת
+        // הקישור המעודכן של ה-Web App של גוגל
         const API_URL = "https://script.google.com/macros/s/AKfycbxgZEZsdN_Lh_c8vZ7bKZ9WbemTeJ_MCQXoCD858FMYMxjxhRRXApeAbe42O0zOYVG8/exec";
         
         // שם הקטגוריה לסינון בעמודה B בשיטס
         const CATEGORY_NAME = "מתנפחי ענק ומים"; 
 
-        // המרת קישורי תצוגה ושיתוף רגילים של גוגל דרייב לקישורי קובץ ישירים (Direct Stream Embed)
+        // פונקציית המרה משודרגת לכל סוגי הקישורים של גוגל דרייב לקבלת נתיב תמונה ישיר
         function formatDriveImageUrl(url) {
             if (!url) return 'images/default-item.jpg';
+            
+            url = url.trim();
+            
             if (url.includes('drive.google.com')) {
-                let parts = url.split('/d/');
-                if (parts.length > 1) {
-                    let id = parts[1].split('/')[0];
+                let id = '';
+                
+                // 1. תמיכה בפורמט עם הפרמטר id= (כמו open?id= או file/d/...id=)
+                if (url.includes('id=')) {
+                    id = url.split('id=')[1].split('&')[0];
+                } 
+                // 2. תמיכה בפורמט הנפוץ של נתיב שיתוף /d/ID/
+                else if (url.includes('/d/')) {
+                    id = url.split('/d/')[1].split('/')[0];
+                }
+                
+                if (id) {
                     return `https://docs.google.com/uc?export=view&id=${id}`;
                 }
             }
@@ -269,7 +281,6 @@
             const containerEl = document.getElementById('products-container');
 
             try {
-                // פנייה לקוד הגוגל אפס סקריפט
                 const response = await fetch(`${API_URL}?category=${encodeURIComponent(CATEGORY_NAME)}`);
                 const data = await response.json();
 
@@ -285,10 +296,8 @@
                 data.forEach(item => {
                     const imageUrl = formatDriveImageUrl(item.image);
                     
-                    // הרכבת כתובת URL מועשרת בפרמטרים עבור דף ההזמנה האוטומטי
                     const orderUrl = `order.html?title=${encodeURIComponent(item.title)}&artist=${encodeURIComponent(item.artist)}&singlePrice=${encodeURIComponent(item.singlePrice)}&groupPrice=${encodeURIComponent(item.groupPrice)}&city=${encodeURIComponent(item.city)}`;
                     
-                    // בניית תצוגת מחירים על פי קיום תנאי המידע בגיליון
                     let pricesHtml = '';
                     if (item.singlePrice || item.groupPrice) {
                         pricesHtml += `<div class="product-prices-block">`;
@@ -301,13 +310,11 @@
                         pricesHtml += `</div>`;
                     }
 
-                    // בניית תצוגת הערות
                     let notesHtml = '';
                     if (item.notes) {
                         notesHtml = `<div class="product-notes">💡 ${item.notes}</div>`;
                     }
 
-                    // בניית תצוגת מיקום / עיר
                     let cityHtml = item.city ? `<span class="product-city">📍 ${item.city}</span>` : '';
 
                     htmlContent += `
