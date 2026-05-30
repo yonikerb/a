@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אישור הזמנה | קעמפ-קליק</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Assistant', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .order-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            text-align: right;
+        }
+
+        h2 { font-size: 26px; font-weight: 800; color: #0f172a; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
+        h3 { font-size: 18px; font-weight: 700; color: #1e293b; margin-top: 20px; margin-bottom: 10px; }
+
+        .attraction-summary {
+            background: #f1f5f9;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-right: 4px solid #d97706;
+        }
+        .summary-item { font-size: 15px; margin-bottom: 6px; color: #334155; }
+        .summary-item strong { color: #0f172a; }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+        label {
+            display: block;
+            font-size: 14.5px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 15px;
+            color: #0f172a;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        input:focus, select:focus {
+            border-color: #d97706;
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
+        }
+
+        .price-calculator {
+            background-color: #fffbeb;
+            border: 1px dashed #fcd34d;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 25px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .price-label { font-size: 16px; font-weight: 700; color: #b45309; }
+        .price-amount { font-size: 24px; font-weight: 800; color: #78350f; }
+
+        .payment-notice {
+            background-color: #fef2f2;
+            border: 1px solid #fee2e2;
+            color: #991b1b;
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-size: 13.5px;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .submit-btn {
+            background-color: #0f172a;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .submit-btn:hover { background-color: #d97706; }
+        .submit-btn:disabled { background-color: #94a3b8; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="order-card">
+            <h2>טופס סיכום ואישור הזמנה</h2>
+            
+            <div class="attraction-summary">
+                <div class="summary-item">אטרקציה נבחרת: <strong id="summary-title">-</strong></div>
+                <div class="summary-item">מפעיל / אומן: <strong id="summary-artist">-</strong></div>
+                <div class="summary-item">אזור / עיר פעילות: <strong id="summary-city">-</strong></div>
+            </div>
+
+            <form id="orderForm" onsubmit="handleOrderSubmit(event)">
+                
+                <h3>1. חישוב עלות לפי כמות משתתפים</h3>
+                <div class="form-group">
+                    <label for="participantCount">מספר משתתפים באירוע:</label>
+                    <input type="number" id="participantCount" min="1" required placeholder="הזן כמות משתתפים" oninput="calculateTotalCost()">
+                </div>
+
+                <div class="price-calculator">
+                    <span class="price-label">סה"כ לתשלום משוער:</span>
+                    <span class="price-amount" id="totalPriceDisplay">₪0</span>
+                </div>
+
+                <h3>2. פרטי הישיבה המזמינה</h3>
+                
+                <div class="form-group">
+                    <label for="yeshivaName">שם הישיבה:</label>
+                    <input type="text" id="yeshivaName" required placeholder="לדוגמה: ישיבת...">
+                </div>
+
+                <div class="form-group">
+                    <label for="yeshivaAddress">כתובת הישיבה:</label>
+                    <input type="text" id="yeshivaAddress" required placeholder="עיר, רחוב ומספר">
+                </div>
+
+            
+                <div class="form-group">
+                    <label for="contactPhone">מספר טלפון ליצירת קשר:</label>
+                    <input type="tel" id="contactPhone" required placeholder="לדוגמה: 050-1234567">
+                </div>
+
+                <div class="form-group">
+                    <label for="contactEmail">מייל אישי של איש הקשר המזמין:</label>
+                    <input type="email" id="contactEmail" required placeholder="contact@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="paymentMethod">אופן התשלום הרצוי:</label>
+                    <select id="paymentMethod" required>
+                        <option value="" disabled selected>בחר אופן תשלום...</option>
+                        <option value="צ'ק מוסדות">צ'ק מוסדות</option>
+                        <option value="העברה בנקאית">העברה בנקאית</option>
+                        <option value="מזומן">מזומן</option>
+                        <option value="כרטיס אשראי">כרטיס אשראי</option>
+                    </select>
+                </div>
+
+                <div class="payment-notice">
+                    🔒 <strong>שימו לב:</strong> לא מבוצע חיוב כספי כעת. התשלום יוסדר וייגבה רק לאחר בדיקת זמינות ואישור סופי של ההזמנה מול נציג האתר באופן טלפוני.
+                </div>
+
+                <button type="submit" id="submitBtn" class="submit-btn">אשר ושלח בקשת הזמנה</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // הקישור האמיתי והמלא שלך עודכן כאן בהצלחה
+        const API_URL = "https://script.google.com/macros/s/AKfycbwgmVIzgn5LtedYptn-dqy2CT2M3xSUNoFp3pSoATLyjDzdFSwRQQwJwiETACqMYyZ8/exec";
+
+        let singlePrice = 0;
+        let groupPrice = 0;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            
+            document.getElementById('summary-title').innerText = params.get('title') || 'לא נבחר';
+            document.getElementById('summary-artist').innerText = params.get('artist') || 'לא נבחר';
+            document.getElementById('summary-city').innerText = params.get('city') || 'כל הארץ';
+            
+            singlePrice = parseFloat(params.get('singlePrice')) || 0;
+            groupPrice = parseFloat(params.get('groupPrice')) || 0;
+            
+            calculateTotalCost();
+        });
+
+        function calculateTotalCost() {
+            const count = parseInt(document.getElementById('participantCount').value) || 0;
+            let finalPrice = 0;
+
+            if (count > 0) {
+                let activePrice = (groupPrice && count >= 30) ? groupPrice : singlePrice;
+                if (!activePrice) activePrice = singlePrice || groupPrice || 0;
+                finalPrice = count * activePrice;
+            }
+
+            document.getElementById('totalPriceDisplay').innerText = `₪${finalPrice.toLocaleString()}`;
+            return finalPrice;
+        }
+
+        async function handleOrderSubmit(event) {
+            event.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "שולח בקשה במערכת...";
+
+            const params = new URLSearchParams(window.location.search);
+            
+            const orderData = {
+                action: "placeOrder",
+                title: params.get('title'),
+                artist: params.get('artist'),
+                artistEmail: params.get('artistEmail'), 
+                city: params.get('city'),
+                participantCount: document.getElementById('participantCount').value,
+                totalPrice: calculateTotalCost(),
+                yeshivaName: document.getElementById('yeshivaName').value,
+                yeshivaAddress: document.getElementById('yeshivaAddress').value,
+                yeshivaEmail: document.getElementById('yeshivaEmail').value,
+                contactPhone: document.getElementById('contactPhone').value,
+                contactEmail: document.getElementById('contactEmail').value,
+                paymentMethod: document.getElementById('paymentMethod').value
+            };
+
+            try {
+                await fetch(API_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                });
+
+                alert("ההזמנה נקלטה בהצלחה! מייל סיכום נשלח אליך,  נציג יצור עמכם קשר בהקדם.");
+                window.location.href = "index.html";
+
+            } catch (error) {
+                console.error("Error submitting order:", error);
+                alert("חלה שגיאה בתקשורת עם השרת.");
+                submitBtn.disabled = false;
+                submitBtn.innerText = "אשר ושלח בקשת הזמנה";
+            }
+        }
+    </script>
+</body>
+</html>
