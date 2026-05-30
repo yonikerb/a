@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> הזמנה | קעמפ-קליק</title>
+    <title>הזמנה | קעמפ-קליק</title>
     <link rel="icon" type="image/png" href="logo.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,9 +53,6 @@
             grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
-        @media (max-width: 600px) {
-            .attraction-summary { grid-template-columns: 1fr; }
-        }
         .summary-item { font-size: 15px; color: #334155; }
         .summary-item strong { color: #0f172a; }
 
@@ -78,6 +75,7 @@
             color: #0f172a;
             outline: none;
             transition: border-color 0.2s;
+            font-family: 'Assistant', sans-serif;
         }
         input:focus, select:focus {
             border-color: #d97706;
@@ -122,6 +120,68 @@
         }
         .submit-btn:hover { background-color: #d97706; }
         .submit-btn:disabled { background-color: #94a3b8; cursor: not-allowed; }
+
+        /* ============= RESPONSIVE DESIGN ============= */
+        
+        @media (max-width: 1024px) {
+            .container { margin: 30px auto; }
+            .order-card { padding: 25px; }
+            h2 { font-size: 24px; }
+            h3 { font-size: 16px; }
+        }
+
+        @media (max-width: 768px) {
+            .container { margin: 20px auto; padding: 0 15px; }
+            .order-card { padding: 20px; border-radius: 10px; }
+            h2 { font-size: 22px; margin-bottom: 15px; }
+            h3 { font-size: 15px; margin-top: 15px; }
+            
+            .attraction-summary { grid-template-columns: 1fr; padding: 15px; gap: 8px; }
+            .summary-item { font-size: 14px; }
+            
+            .form-group { margin-bottom: 15px; }
+            label { font-size: 13.5px; margin-bottom: 5px; }
+            input, select { padding: 9px 10px; font-size: 14px; }
+            
+            .price-calculator { padding: 12px; margin: 20px 0; }
+            .price-label { font-size: 14px; }
+            .price-amount { font-size: 20px; }
+            
+            .payment-notice { padding: 10px 12px; font-size: 12px; margin-bottom: 20px; }
+            .submit-btn { padding: 12px; font-size: 14px; }
+        }
+
+        @media (max-width: 480px) {
+            .container { margin: 15px auto; padding: 0 12px; }
+            .order-card { padding: 18px; }
+            h2 { font-size: 20px; margin-bottom: 12px; padding-bottom: 8px; }
+            h3 { font-size: 14px; margin-top: 12px; }
+            
+            .attraction-summary { padding: 12px; gap: 6px; margin-bottom: 20px; }
+            .summary-item { font-size: 13px; }
+            
+            .form-group { margin-bottom: 12px; }
+            label { font-size: 12.5px; margin-bottom: 4px; }
+            input, select { padding: 8px 9px; font-size: 13px; }
+            
+            .price-calculator { padding: 10px; margin: 15px 0; flex-direction: column; gap: 8px; text-align: right; }
+            .price-label { font-size: 13px; }
+            .price-amount { font-size: 18px; }
+            
+            .payment-notice { padding: 8px 10px; font-size: 11px; margin-bottom: 15px; }
+            .submit-btn { padding: 11px; font-size: 13px; }
+        }
+
+        @media (max-width: 360px) {
+            .container { padding: 0 10px; }
+            .order-card { padding: 16px; }
+            h2 { font-size: 18px; }
+            h3 { font-size: 13px; }
+            .summary-item { font-size: 12px; }
+            label { font-size: 12px; }
+            input, select { font-size: 12px; }
+            .submit-btn { font-size: 12px; }
+        }
     </style>
 </head>
 <body>
@@ -131,17 +191,17 @@
             <h2>טופס הזמנה</h2>
             
             <div class="attraction-summary">
-                <div class="summary-item"> אטרקציה: <strong id="summary-title">-</strong></div>
-                <div class="summary-item"> מפעיל: <strong id="summary-artist">-</strong></div>
-                <div class="summary-item"> אזור: <strong id="summary-city">-</strong></div>
-                <div class="summary-item"> מחיר ליחיד: <strong id="summary-prices">-</strong></div>
+                <div class="summary-item">אטרקציה: <strong id="summary-title">-</strong></div>
+                <div class="summary-item">מפעיל: <strong id="summary-artist">-</strong></div>
+                <div class="summary-item">אזור: <strong id="summary-city">-</strong></div>
+                <div class="summary-item">מחיר ליחיד: <strong id="summary-prices">-</strong></div>
             </div>
 
             <form id="orderForm" onsubmit="handleOrderSubmit(event)">
                 
                 <h3>1. חישוב עלות לפי כמות משתתפים</h3>
                 <div class="form-group">
-                    <label for="participantCount">מספר משתתפים :</label>
+                    <label for="participantCount">מספר משתתפים:</label>
                     <input type="number" id="participantCount" min="1" required placeholder="הזן כמות משתתפים" oninput="calculateTotalCost()">
                 </div>
 
@@ -184,7 +244,7 @@
                 </div>
 
                 <div class="payment-notice">
-                    🔒 <strong>שימו לב:</strong> לא מבוצע חיוב כספי כעת. התשלום יוסדר וייגבה רק לאחר בדיקת זמינות ואישור סופי של ההזמנה מול נציג האתר באופן טלפוני.
+                    🔒 <strong>שימו לב:</strong> לא מבוצע חיוב כספי כעת. התשלום יוסדר וייגבה רק לאחר בדיקת זמינות ואישור סופי מהמפעיל.
                 </div>
 
                 <button type="submit" id="submitBtn" class="submit-btn">אשר ושלח בקשת הזמנה</button>
@@ -193,7 +253,6 @@
     </div>
 
     <script>
-        // שים לב לעדכן פה את הקישור החדש שקיבלת מה-Deploy בגוגל סקריפט!
         const API_URL = "https://script.google.com/macros/s/AKfycbxjXT1VJiq1feJvyHbM3ZMuCFh260MIE-TIabbMZcBr6Qt8sST4S6k-xKjPqd9HkKI7/exec";
 
         let singlePrice = 0;
@@ -270,7 +329,7 @@
                     body: JSON.stringify(orderData)
                 });
 
-                alert("ההזמנה נקלטה במערכת בהצלחה! מייל סיכום נשלח כעת אליך, .");
+                alert("ההזמנה נקלטה במערכת בהצלחה! מייל סיכום נשלח כעת אליך.");
                 window.location.href = "index.html";
 
             } catch (error) {

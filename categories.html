@@ -4,17 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>קטגוריות אטרקציות | קעמפ-קליק</title>
-    
-    <!-- הוספת לוגו בלשונית הדפדפן (Favicon) -->
     <link rel="icon" type="image/png" href="logo.png">
-    
-    <!-- פונט עברי איכותי -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* אתחול ועיצוב גלובלי עם יישור מרכזי */
         * {
             margin: 0;
             padding: 0;
@@ -106,7 +101,6 @@
             width: 100%;
         }
 
-        /* אזור שמאל - הסל העליון */
         .nav-left {
             display: flex;
             align-items: center;
@@ -143,7 +137,7 @@
             font-weight: 700;
         }
 
-        /* כותרת קטגוריות ראשית */
+        /* כותרת קטגוריות */
         .categories-hero {
             background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
             color: white;
@@ -177,7 +171,6 @@
             gap: 25px;
         }
 
-        /* כרטיסיית קטגוריה מבוססת תמונת רקע */
         .category-card {
             border-radius: 12px;
             height: 240px;
@@ -193,12 +186,10 @@
             background-position: center;
             background-repeat: no-repeat;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
-                        box-shadow 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
             animation: cardSlideUp 0.5s ease-out backwards;
         }
 
-        /* שכבת כיסוי כהה מובנית מעל התמונה */
         .category-card::before {
             content: '';
             position: absolute;
@@ -211,7 +202,6 @@
             z-index: 1;
         }
 
-        /* אפקט ריחוף על כרטיסיית התמונה */
         .category-card:hover {
             transform: translateY(-6px);
             box-shadow: 0 20px 30px -10px rgba(15, 23, 42, 0.3);
@@ -221,7 +211,6 @@
             background: linear-gradient(180deg, rgba(217, 119, 6, 0.3) 0%, rgba(15, 23, 42, 0.85) 100%);
         }
 
-        /* תוכן הטקסט מעל השכבה */
         .category-content {
             position: relative;
             z-index: 2;
@@ -256,23 +245,6 @@
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
         }
 
-        /* השהיית אנימציה מדורגת */
-        .category-card:nth-child(1)  { animation-delay: 0.05s; }
-        .category-card:nth-child(2)  { animation-delay: 0.10s; }
-        .category-card:nth-child(3)  { animation-delay: 0.15s; }
-        .category-card:nth-child(4)  { animation-delay: 0.20s; }
-        .category-card:nth-child(5)  { animation-delay: 0.25s; }
-        .category-card:nth-child(6)  { animation-delay: 0.30s; }
-        .category-card:nth-child(7)  { animation-delay: 0.35s; }
-        .category-card:nth-child(8)  { animation-delay: 0.40s; }
-        .category-card:nth-child(9)  { animation-delay: 0.45s; }
-        .category-card:nth-child(10) { animation-delay: 0.50s; }
-        .category-card:nth-child(11) { animation-delay: 0.55s; }
-        .category-card:nth-child(12) { animation-delay: 0.60s; }
-        .category-card:nth-child(13) { animation-delay: 0.65s; }
-        .category-card:nth-child(14) { animation-delay: 0.70s; }
-        .category-card:nth-child(15) { animation-delay: 0.75s; }
-
         @keyframes fadeInPage {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -289,32 +261,22 @@
             }
         }
 
-        /* רספונסיביות */
-        @media (max-width: 1024px) {
-            .categories-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-            }
-        }
+        .category-card:nth-child(1)  { animation-delay: 0.05s; }
+        .category-card:nth-child(2)  { animation-delay: 0.10s; }
+        .category-card:nth-child(3)  { animation-delay: 0.15s; }
+        .category-card:nth-child(4)  { animation-delay: 0.20s; }
+        .category-card:nth-child(5)  { animation-delay: 0.25s; }
+        .category-card:nth-child(6)  { animation-delay: 0.30s; }
+        .category-card:nth-child(7)  { animation-delay: 0.35s; }
+        .category-card:nth-child(8)  { animation-delay: 0.40s; }
+        .category-card:nth-child(9)  { animation-delay: 0.45s; }
+        .category-card:nth-child(10) { animation-delay: 0.50s; }
+        .category-card:nth-child(11) { animation-delay: 0.55s; }
+        .category-card:nth-child(12) { animation-delay: 0.60s; }
+        .category-card:nth-child(13) { animation-delay: 0.65s; }
+        .category-card:nth-child(14) { animation-delay: 0.70s; }
+        .category-card:nth-child(15) { animation-delay: 0.75s; }
 
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .nav-right {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .categories-grid {
-                grid-template-columns: 1fr;
-            }
-            .category-card {
-                height: 200px;
-            }
-        }
-
-        /* תחתית הדף */
         footer {
             background-color: #0f172a;
             color: #64748b;
@@ -324,11 +286,75 @@
             margin-top: 100px;
             border-top: 1px solid #1e293b;
         }
+
+        /* ============= RESPONSIVE DESIGN ============= */
+        
+        @media (max-width: 1024px) {
+            .nav-right { gap: 30px; }
+            .nav-menu { gap: 20px; }
+            .nav-menu li a { font-size: 14px; }
+            .categories-hero h1 { font-size: 32px; }
+            .categories-hero p { font-size: 15px; }
+            .catalog-section { margin: 50px auto; }
+            .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .category-card { height: 220px; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column; gap: 12px; padding: 12px 15px; }
+            .nav-right { flex-direction: column; gap: 15px; width: 100%; }
+            .logo-container img { height: 36px; }
+            .nav-menu { flex-direction: column; gap: 10px; width: 100%; }
+            .nav-menu li a { font-size: 13px; }
+            .nav-left { width: 100%; }
+            .cart-btn { width: 100%; justify-content: center; padding: 8px 15px; }
+            
+            .categories-hero { padding: 40px 15px; }
+            .categories-hero h1 { font-size: 26px; margin-bottom: 8px; }
+            .categories-hero p { font-size: 14px; }
+            
+            .catalog-section { margin: 35px auto; padding: 0 15px; }
+            .categories-grid { grid-template-columns: 1fr; gap: 15px; }
+            .category-card { height: 200px; }
+            .category-content h3 { font-size: 20px; }
+            .category-content p { font-size: 13px; max-width: 250px; }
+            
+            footer { padding: 25px 15px; font-size: 13px; margin-top: 60px; }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container { gap: 10px; padding: 10px 12px; }
+            .nav-right { gap: 12px; }
+            .logo-container img { height: 32px; }
+            .nav-menu li a { font-size: 12px; }
+            .cart-btn { padding: 7px 12px; font-size: 11px; }
+            
+            .categories-hero { padding: 30px 12px; }
+            .categories-hero h1 { font-size: 20px; }
+            .categories-hero p { font-size: 12px; }
+            
+            .catalog-section { margin: 20px auto; padding: 0 12px; }
+            .category-card { height: 180px; }
+            .category-content { padding: 15px; gap: 8px; }
+            .category-content h3 { font-size: 17px; }
+            .category-content p { font-size: 12px; }
+            
+            footer { padding: 20px 12px; font-size: 12px; margin-top: 40px; }
+        }
+
+        @media (max-width: 360px) {
+            .nav-right { gap: 10px; }
+            .logo-container img { height: 28px; }
+            .nav-menu li a { font-size: 11px; }
+            .categories-hero h1 { font-size: 18px; }
+            .categories-hero p { font-size: 11px; }
+            .category-content h3 { font-size: 15px; }
+            .category-content p { font-size: 11px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- סרגל ניווט פרימיום -->
     <header>
         <div class="nav-container">
             <div class="nav-right">
@@ -352,17 +378,13 @@
         </div>
     </header>
 
-    <!-- אזור כותרת קטגוריות קומפקטי -->
     <section class="categories-hero">
         <h1>קטלוג קטגוריות האטרקציות</h1>
         <p>בחרו את תחום הפעילות המבוקש וצפו במגוון פתרונות ההפקה המובילים שלנו</p>
     </section>
 
-    <!-- גוף הקטלוג -->
     <main class="catalog-section">
         <div class="categories-grid">
-            
-            <!-- קטגוריה 1 -->
             <a href="category-inflatables.html" class="category-card" style="background-image: url('images/category-inflatables.jpg');">
                 <div class="category-content">
                     <h3>מתנפחי ענק ומים</h3>
@@ -370,7 +392,6 @@
                 </div>
             </a>
 
-            <!-- קטגוריה 2 -->
             <a href="category-simulation.html" class="category-card" style="background-image: url('images/category-simulation.jpg');">
                 <div class="category-content">
                     <h3>סימולטורים ומולטימדיה</h3>
@@ -378,7 +399,6 @@
                 </div>
             </a>
 
-            <!-- קטגוריה 3 -->
             <a href="category-water-sports.html" class="category-card" style="background-image: url('images/category-water-sports.jpg');">
                 <div class="category-content">
                     <h3>אטרקציות מים ושיט</h3>
@@ -386,7 +406,6 @@
                 </div>
             </a>
 
-            <!-- קטגוריה 4 -->
             <a href="category-workshops.html" class="category-card" style="background-image: url('images/category-workshops.jpg');">
                 <div class="category-content">
                     <h3>סדנאות יצירה ואומנות</h3>
@@ -394,7 +413,6 @@
                 </div>
             </a>
 
-            <!-- קטגוריה 5 -->
             <a href="category-field-trips.html" class="category-card" style="background-image: url('images/category-field-trips.jpg');">
                 <div class="category-content">
                     <h3>ניווט ושטח ODT</h3>
@@ -402,7 +420,6 @@
                 </div>
             </a>
 
-            <!-- קטגוריה 6 -->
             <a href="category-laser-tag.html" class="category-card" style="background-image: url('images/category-laser-tag.jpg');">
                 <div class="category-content">
                     <h3>לייזר טאג ופיינטבול</h3>
@@ -410,7 +427,6 @@
                 </div>
             </a>
 
-            <!-- קטגוריה 7 -->
             <a href="category-food-stalls.html" class="category-card" style="background-image: url('images/category-food-stalls.jpg');">
                 <div class="category-content">
                     <h3>דוכני מזון וכיבוד</h3>
@@ -418,7 +434,6 @@
                 </div>
             </a>
 
-            <!-- קטגוריה 8 -->
             <a href="category-escape-rooms.html" class="category-card" style="background-image: url('images/category-escape-rooms.jpg');">
                 <div class="category-content">
                     <h3>חדרי בריחה ניידים</h3>
@@ -426,7 +441,6 @@
                 </div>
             </a>
 
-            <!-- קטגוריה 9 -->
             <a href="category-giant-games.html" class="category-card" style="background-image: url('images/category-giant-games.jpg');">
                 <div class="category-content">
                     <h3>משחקי רצפה וענק</h3>
@@ -434,15 +448,13 @@
                 </div>
             </a>
 
-            <!-- קטגוריה 10 -->
             <a href="category-extreme.html" class="category-card" style="background-image: url('images/category-extreme.jpg');">
                 <div class="category-content">
-                    <h3>אקסטרים וקירות טיפוס</h3>
+                    <h3>אקסטרים וקירות ט��פוס</h3>
                     <p>מתקני אומגה, פארק חבלים נייד וקירות טיפוס מקצועיים עם רתמות בטיחות.</p>
                 </div>
             </a>
 
-            <!-- קטגוריה 11 -->
             <a href="category-science.html" class="category-card" style="background-image: url('images/category-science.jpg');">
                 <div class="category-content">
                     <h3>מדע וטכנולוגיה חווייתית</h3>
@@ -450,7 +462,6 @@
                 </div>
             </a>
 
-            <!-- קטגוריה 12 -->
             <a href="category-music.html" class="category-card" style="background-image: url('images/category-music.jpg');">
                 <div class="category-content">
                     <h3>מעגלי מתופפים ומוזיקה</h3>
@@ -458,7 +469,6 @@
                 </div>
             </a>
 
-            <!-- קטגוריה 13 -->
             <a href="category-wheels.html" class="category-card" style="background-image: url('images/category-wheels.jpg');">
                 <div class="category-content">
                     <h3>רכבי שטח וגלגלים</h3>
@@ -466,26 +476,22 @@
                 </div>
             </a>
 
-            <!-- קטגוריה 14 -->
             <a href="category-shows.html" class="category-card" style="background-image: url('images/category-shows.jpg');">
                 <div class="category-content">
                     <h3>הופעות ותיאטרון תוכן</h3>
-                    <p>מופעי קסמים, תיאטרון בובות חינוכי, ומופעי טלפתיה מרתקים המותאמים לציבור שלנו.</p>
+                    <p>מופעי קסמים, תיאטרון בובות חינוכי, ומופעי טלפתיה מרתקים.</p>
                 </div>
             </a>
 
-            <!-- קטגוריה 15 -->
             <a href="category-camping.html" class="category-card" style="background-image: url('images/category-camping.jpg');">
                 <div class="category-content">
                     <h3>ציוד קמפינג ולינת שטח</h3>
                     <p>השכרת אוהלים, שקי שינה, פתרונות תאורת שטח ומערכות שטח לוגיסטיות לקעמפ.</p>
                 </div>
             </a>
-
         </div>
     </main>
 
-    <!-- תחתית הדף -->
     <footer>
         <p>© 2026 קעמפ-קליק - פתרונות טכנולוגיים מתקדמים לאירועים. כל הזכויות שמורות.</p>
     </footer>

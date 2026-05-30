@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>קעמפ-קליק | פלטפורמת אטרקציות מקצועית</title>
-    <!-- פונט עברי איכותי -->
-    <link rel="preconnect" href="                            ">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="                                                           ;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* אתחול ועיצוב גלובלי עם יישור מרכזי */
         * {
             margin: 0;
             padding: 0;
@@ -23,7 +21,7 @@
             color: #1e293b;
             line-height: 1.7;
             font-size: 16px;
-            text-align: center; /* יישור דיפולטיבי למרכז עבור כל האתר */
+            text-align: center;
         }
 
         a {
@@ -89,7 +87,7 @@
             position: absolute;
             bottom: 0;
             left: 50%;
-            transform: translateX(-50%); /* קו תחתי שמתרחב מהאמצע */
+            transform: translateX(-50%);
             width: 0;
             height: 2px;
             background-color: #d97706;
@@ -100,7 +98,6 @@
             width: 100%;
         }
 
-        /* אזור שמאל - הסל העליון */
         .nav-left {
             display: flex;
             align-items: center;
@@ -191,6 +188,7 @@
             font-weight: 600;
             box-shadow: 0 4px 12px rgba(217, 119, 6, 0.2);
             display: inline-block;
+            transition: all 0.2s ease;
         }
 
         .hero-btn:hover {
@@ -199,7 +197,6 @@
             box-shadow: 0 6px 20px rgba(217, 119, 6, 0.3);
         }
 
-        /* אזור עלינו - מבנה גריד (2 ואז 1) מיושר למרכז */
         .about-section {
             max-width: 1200px;
             margin: 90px auto;
@@ -226,7 +223,6 @@
             text-align: center;
         }
 
-        /* גריד לבאנרים */
         .banners-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -239,8 +235,8 @@
             border-radius: 12px;
             padding: 40px 35px;
             display: flex;
-            flex-direction: column; /* שינוי לטור כדי שהאלמנטים יסתדרו אנכית במרכז */
-            align-items: center;    /* מרכז את התוכן אנכית */
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
             gap: 20px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.02);
@@ -265,7 +261,7 @@
             background-color: #f8fafc;
             width: 65px;
             height: 65px;
-            border-radius: 50%; /* אייקון עגול ומרכזי */
+            border-radius: 50%;
             font-size: 28px;
             border: 1px solid #f1f5f9;
             flex-shrink: 0;
@@ -289,20 +285,9 @@
             color: #475569;
             text-align: center;
             max-width: 600px;
-            margin: 0 auto; /* מרכז את פסקה ברוחב מקסימלי */
+            margin: 0 auto;
         }
 
-        /* רספונסיביות */
-        @media (max-width: 768px) {
-            .banners-grid {
-                grid-template-columns: 1fr;
-            }
-            .premium-banner.full-width {
-                grid-column: span 1;
-            }
-        }
-
-        /* תחתית הדף */
         footer {
             background-color: #0f172a;
             color: #64748b;
@@ -312,11 +297,91 @@
             margin-top: 120px;
             border-top: 1px solid #1e293b;
         }
+
+        /* ============= RESPONSIVE DESIGN ============= */
+        
+        /* טאבלט - עד 1024px */
+        @media (max-width: 1024px) {
+            .nav-right { gap: 30px; }
+            .nav-menu { gap: 20px; }
+            .nav-menu li a { font-size: 14px; }
+            .hero { padding: 100px 20px; }
+            .hero h1 { font-size: 40px; }
+            .hero p { font-size: 17px; }
+            .section-header h2 { font-size: 32px; }
+            .about-section { margin: 70px auto; }
+            .banners-grid { gap: 20px; }
+            .premium-banner { padding: 35px 25px; }
+        }
+
+        /* טלפון - עד 768px */
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column; gap: 15px; padding: 12px 15px; }
+            .nav-right { gap: 20px; flex-direction: column; width: 100%; }
+            .logo-container img { height: 36px; }
+            .nav-menu { flex-direction: column; gap: 12px; width: 100%; text-align: right; }
+            .nav-menu li a { font-size: 14px; }
+            .nav-left { width: 100%; }
+            .cart-btn { width: 100%; justify-content: center; }
+            
+            .hero { padding: 60px 15px; }
+            .hero h1 { font-size: 28px; margin-bottom: 16px; }
+            .hero p { font-size: 15px; margin-bottom: 24px; }
+            .hero-btn { padding: 12px 30px; font-size: 14px; }
+            
+            .about-section { margin: 50px auto; padding: 0 15px; }
+            .section-header h2 { font-size: 26px; }
+            .section-header p { font-size: 14px; }
+            .banners-grid { grid-template-columns: 1fr; gap: 15px; }
+            .premium-banner { padding: 25px 20px; gap: 15px; }
+            .premium-banner.full-width { grid-column: span 1; }
+            .banner-icon-container { width: 55px; height: 55px; font-size: 24px; }
+            .banner-text h3 { font-size: 18px; }
+            .banner-text p { font-size: 13.5px; }
+            
+            footer { padding: 25px 15px; font-size: 13px; margin-top: 60px; }
+        }
+
+        /* טלפון קטן - עד 480px */
+        @media (max-width: 480px) {
+            .nav-container { gap: 10px; padding: 10px 12px; }
+            .nav-right { gap: 15px; }
+            .logo-container img { height: 32px; }
+            .nav-menu { gap: 10px; }
+            .nav-menu li a { font-size: 13px; }
+            .cart-btn { padding: 8px 12px; font-size: 12px; }
+            
+            .hero { padding: 40px 12px; }
+            .hero h1 { font-size: 22px; margin-bottom: 12px; }
+            .hero p { font-size: 13px; margin-bottom: 18px; }
+            .hero-btn { padding: 10px 24px; font-size: 13px; }
+            
+            .about-section { margin: 30px auto; padding: 0 12px; }
+            .section-header h2 { font-size: 21px; }
+            .section-header p { font-size: 13px; }
+            .premium-banner { padding: 20px 15px; gap: 12px; }
+            .banner-icon-container { width: 50px; height: 50px; font-size: 22px; }
+            .banner-text h3 { font-size: 16px; }
+            .banner-text p { font-size: 12px; }
+            
+            footer { padding: 20px 12px; font-size: 12px; margin-top: 40px; }
+        }
+
+        /* דיוויס קטנים מאוד - עד 360px */
+        @media (max-width: 360px) {
+            .nav-right { gap: 12px; }
+            .logo-container img { height: 28px; }
+            .nav-menu li a { font-size: 12px; }
+            .cart-btn { padding: 7px 10px; font-size: 11px; }
+            .hero h1 { font-size: 19px; }
+            .hero p { font-size: 12px; }
+            .section-header h2 { font-size: 19px; }
+            .section-header p { font-size: 12px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- סרגל ניווט פרימיום -->
     <header>
         <div class="nav-container">
             <div class="nav-right">
@@ -324,9 +389,8 @@
                     <a href="#"><img src="logo.png" alt="logo.png"></a>
                 </div>
                 <ul class="nav-menu">
-                    <li><a href=index.html">דף הבית</a></li>
+                    <li><a href="index.html">דף הבית</a></li>
                     <li><a href="categories.html">קטגוריות אטרקציות</a></li>
-                 
                     <li><a href="contact.html">יצירת קשר</a></li>
                 </ul>
             </div>
@@ -341,16 +405,14 @@
         </div>
     </header>
 
-    <!-- אזור תצוגה ראשי (Hero) -->
     <section class="hero">
         <div class="hero-content">
             <h1>כל האטרקציות לקעמפים ואירועים תחת קורת גג אחת</h1>
-            <p>מערכת סינון והזמנות מתקדמת המאפשרת למארגנים ולמנהלי תוכניות לסגור את לו"ז הפעילויות בביטחון ובמהירות.</p>
-            <a href="categories.html" class="hero-btn">מעבר לקטלוג הקטגוריות המלא</a>
+            <p>מערכת סינון והזמנות מתקדמת המאפשרת למארגנים ולמנהלי תוכניות לסגור את לו"ז הפעילויות בביטחון ובמהירות</p>
+            <a href="categories.html" class="hero-btn">מעבור לקטלוג הקטגוריות המלא</a>
         </div>
     </section>
 
-    <!-- אזור אודות מיושר לחלוטין למרכז -->
     <section class="about-section">
         <div class="section-header">
             <h2>אודות הפלטפורמה</h2>
@@ -358,36 +420,32 @@
         </div>
         
         <div class="banners-grid">
-            <!-- באנר 1 -->
             <div class="premium-banner">
                 <div class="banner-icon-container">💼</div>
                 <div class="banner-text">
                     <h3>ניסיון מקצועי וליווי מקיף</h3>
-                    <p>פיתחנו את המערכת מתוך הבנה מעמיקה של צורכי מנהלי הקעמפים. אנו מציעים רק ספקים שעברו סינון קפדני כדי להבטיח רמת ביצוע מושלמת בשטח.</p>
+                    <p>פיתחנו את המערכת מתוך הבנה מעמיקה של צורכי מנהלי הקעמפים. אנו מציעים רק ספקים שעברו סינון קפדני וידוע לנו שהם אמינים וחכמים</p>
                 </div>
             </div>
 
-            <!-- באנר 2 -->
             <div class="premium-banner">
                 <div class="banner-icon-container">🎯</div>
                 <div class="banner-text">
                     <h3>חדשנות ותוכן מותאם</h3>
-                    <p>הקטלוג שלנו מתעדכן באופן שוטף באטרקציות ובטכנולוגיות המובילות בשוק, תוך התאמה מדויקת לאופי האירוע, לגילאי החניכים ולדרישות הלו"ז שלכם.</p>
+                    <p>הקטלוג שלנו מתעדכן באופן שוטף באטרקציות ובטכנולוגיות המובילות בשוק, תוך התאמה מדויקת לאופי הציבור שלנו</p>
                 </div>
             </div>
 
-            <!-- באנר 3 (רוחב מלא) -->
             <div class="premium-banner full-width">
                 <div class="banner-icon-container">🛡️</div>
                 <div class="banner-text">
                     <h3>בטיחות קפדנית והסמכות</h3>
-                    <p>אנו לא מתפשרים על שלומם של המשתתפים. כלל הציוד, המתקנים וההפעלות המופיעים באתר מחזיקים באישורים הנדרשים ומופעלים על ידי אנשי מקצוע מוסמכים בלבד, כדי שתוכלו להפיק את האירוע בראש שקט לגמרי ובביטחון מלא.</p>
+                    <p>אנו לא מתפשרים על שלומם של המשתתפים. כלל הציוד, המתקנים וההפעלות המופיעים באתר מחזיקים באישורים בטיחותיים עדכניים ממשרדי הממשלה הרלוונטיים</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- תחתית הדף -->
     <footer>
         <p>© 2026 קעמפ-קליק - פתרונות טכנולוגיים מתקדמים לאירועים. כל הזכויות שמורות.</p>
     </footer>
