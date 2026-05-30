@@ -43,14 +43,21 @@
         h2 { font-size: 26px; font-weight: 800; color: #0f172a; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
         h3 { font-size: 18px; font-weight: 700; color: #1e293b; margin-top: 20px; margin-bottom: 10px; }
 
+        /* תיבת סיכום פרטי האומן והאטרקציה מהדף הקודם */
         .attraction-summary {
             background: #f1f5f9;
-            padding: 18px;
+            padding: 20px;
             border-radius: 8px;
             margin-bottom: 25px;
             border-right: 4px solid #d97706;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
         }
-        .summary-item { font-size: 15px; margin-bottom: 6px; color: #334155; }
+        @media (max-width: 600px) {
+            .attraction-summary { grid-template-columns: 1fr; }
+        }
+        .summary-item { font-size: 15px; color: #334155; }
         .summary-item strong { color: #0f172a; }
 
         .form-group {
@@ -125,9 +132,10 @@
             <h2>טופס סיכום ואישור הזמנה</h2>
             
             <div class="attraction-summary">
-                <div class="summary-item">אטרקציה נבחרת: <strong id="summary-title">-</strong></div>
-                <div class="summary-item">מפעיל / אומן: <strong id="summary-artist">-</strong></div>
-                <div class="summary-item">אזור / עיר פעילות: <strong id="summary-city">-</strong></div>
+                <div class="summary-item">🎯 אטרקציה: <strong id="summary-title">-</strong></div>
+                <div class="summary-item">🎤 אומן/מפעיל: <strong id="summary-artist">-</strong></div>
+                <div class="summary-item">📍 אזור פעילות: <strong id="summary-city">-</strong></div>
+                <div class="summary-item">💰 מחיר משוער: <strong id="summary-prices">-</strong></div>
             </div>
 
             <form id="orderForm" onsubmit="handleOrderSubmit(event)">
@@ -155,7 +163,11 @@
                     <input type="text" id="yeshivaAddress" required placeholder="עיר, רחוב ומספר">
                 </div>
 
-            
+                <div class="form-group">
+                    <label for="yeshivaEmail">מייל הישיבה:</label>
+                    <input type="email" id="yeshivaEmail" required placeholder="yeshiva@example.com">
+                </div>
+
                 <div class="form-group">
                     <label for="contactPhone">מספר טלפון ליצירת קשר:</label>
                     <input type="tel" id="contactPhone" required placeholder="לדוגמה: 050-1234567">
@@ -187,12 +199,13 @@
     </div>
 
     <script>
-        // הקישור האמיתי והמלא שלך עודכן כאן בהצלחה
+        // הקישור המלא של ה-Web App שלך מגוגל
         const API_URL = "https://script.google.com/macros/s/AKfycbwgmVIzgn5LtedYptn-dqy2CT2M3xSUNoFp3pSoATLyjDzdFSwRQQwJwiETACqMYyZ8/exec";
 
         let singlePrice = 0;
         let groupPrice = 0;
 
+        // טעינת כל הפרמטרים שהגיעו מהדף הקודם ב-URL והצגתם על המסך
         window.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
             
@@ -203,9 +216,17 @@
             singlePrice = parseFloat(params.get('singlePrice')) || 0;
             groupPrice = parseFloat(params.get('groupPrice')) || 0;
             
+            // הצגת פורמט מחיר יפה בתיבת המידע
+            if (singlePrice && groupPrice) {
+                document.getElementById('summary-prices').innerText = `₪${singlePrice} ליחיד / ₪${groupPrice} לקבוצה`;
+            } else {
+                document.getElementById('summary-prices').innerText = `₪${singlePrice || groupPrice || 'לא הוגדר'}`;
+            }
+            
             calculateTotalCost();
         });
 
+        // חישוב העלות בזמן אמת לפי כמות משתתפים
         function calculateTotalCost() {
             const count = parseInt(document.getElementById('participantCount').value) || 0;
             let finalPrice = 0;
@@ -220,6 +241,7 @@
             return finalPrice;
         }
 
+        // שליחת הטופס לשרת
         async function handleOrderSubmit(event) {
             event.preventDefault();
             
@@ -229,6 +251,7 @@
 
             const params = new URLSearchParams(window.location.search);
             
+            // איסוף הנתונים המדויק למניעת שגיאות null ערך
             const orderData = {
                 action: "placeOrder",
                 title: params.get('title'),
@@ -253,7 +276,7 @@
                     body: JSON.stringify(orderData)
                 });
 
-                alert("ההזמנה נקלטה בהצלחה! מייל סיכום נשלח אליך,  נציג יצור עמכם קשר בהקדם.");
+                alert("ההזמנה נקלטה בהצלחה! מייל סיכום נשלח אליך, לאומן ולאיש הקשר בישיבה.");
                 window.location.href = "index.html";
 
             } catch (error) {
