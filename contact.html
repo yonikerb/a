@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>צור קשר | קעמפ-קליק</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* עיצוב אחיד לשאר האתר */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Assistant', sans-serif; }
+        body { background-color: #f8fafc; color: #1e293b; padding-bottom: 60px; }
+        .container { max-width: 750px; margin: 40px auto; padding: 0 20px; }
+        .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+        h2 { font-size: 26px; font-weight: 800; color: #0f172a; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; font-size: 14.5px; font-weight: 600; color: #475569; margin-bottom: 6px; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 15px; outline: none; }
+        input:focus, textarea:focus { border-color: #d97706; box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1); }
+        .submit-btn { background-color: #0f172a; color: white; border: none; width: 100%; padding: 14px; font-size: 16px; font-weight: 700; border-radius: 6px; cursor: pointer; }
+        .submit-btn:hover { background-color: #d97706; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h2>צור קשר עם הנהלת האתר</h2>
+        <form id="contactForm">
+            <div class="form-group">
+                <label>שם מלא / שם הישיבה</label>
+                <input type="text" id="name" required placeholder="הזן שם...">
+            </div>
+            <div class="form-group">
+                <label>טלפון ליצירת קשר</label>
+                <input type="tel" id="phone" required placeholder="050-1234567">
+            </div>
+            <div class="form-group">
+                <label>כתובת מייל</label>
+                <input type="email" id="email" required placeholder="example@mail.com">
+            </div>
+            <div class="form-group">
+                <label>תוכן ההודעה</label>
+                <textarea id="message" required placeholder="כתוב כאן את פנייתך..."></textarea>
+            </div>
+            <button type="submit" class="submit-btn" id="submitBtn">שלח הודעה</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const API_URL = "הכנס_כאן_את_הקישור_של_הסקריפט_שלך";
+
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        btn.innerText = "שולח...";
+        btn.disabled = true;
+
+        const data = {
+            action: "contact",
+            name: document.getElementById('name').value,
+            phone: document.getElementById('phone').value,
+            email: document.getElementById('email').value,
+            message: document.getElementById('message').value
+        };
+
+        try {
+            await fetch(API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify(data)
+            });
+            alert("תודה רבה! פנייתך התקבלה ונציג יחזור אליך בהקדם.");
+            window.location.href = "index.html";
+        } catch (error) {
+            alert("שגיאה בשליחה, אנא נסה שנית.");
+            btn.disabled = false;
+            btn.innerText = "שלח הודעה";
+        }
+    });
+</script>
+</body>
+</html>
