@@ -226,9 +226,12 @@
             calculateTotalCost();
         });
 
-        // חישוב העלות בזמן אמת לפי כמות משתתפים
+        // חישוב העלות בזמן אמת לפי כמות משתתפים - מוגן מפני ערכי null
         function calculateTotalCost() {
-            const count = parseInt(document.getElementById('participantCount').value) || 0;
+            const inputEl = document.getElementById('participantCount');
+            if (!inputEl) return 0; // מניעת קריסה אם האלמנט טרם נטען ב-DOM
+
+            const count = parseInt(inputEl.value) || 0;
             let finalPrice = 0;
 
             if (count > 0) {
@@ -237,7 +240,10 @@
                 finalPrice = count * activePrice;
             }
 
-            document.getElementById('totalPriceDisplay').innerText = `₪${finalPrice.toLocaleString()}`;
+            const displayEl = document.getElementById('totalPriceDisplay');
+            if (displayEl) {
+                displayEl.innerText = `₪${finalPrice.toLocaleString()}`;
+            }
             return finalPrice;
         }
 
@@ -251,37 +257,39 @@
 
             const params = new URLSearchParams(window.location.search);
             
-            // איסוף הנתונים המדויק למניעת שגיאות null ערך
+            // איסוף הנתונים המדויק
             const orderData = {
                 action: "placeOrder",
-                title: params.get('title'),
-                artist: params.get('artist'),
-                artistEmail: params.get('artistEmail'), 
-                city: params.get('city'),
-                participantCount: document.getElementById('participantCount').value,
+                title: params.get('title') || '',
+                artist: params.get('artist') || '',
+                artistEmail: params.get('artistEmail') || '', 
+                city: params.get('city') || '',
+                participantCount: document.getElementById('participantCount').value || '0',
                 totalPrice: calculateTotalCost(),
-                yeshivaName: document.getElementById('yeshivaName').value,
-                yeshivaAddress: document.getElementById('yeshivaAddress').value,
-                yeshivaEmail: document.getElementById('yeshivaEmail').value,
-                contactPhone: document.getElementById('contactPhone').value,
-                contactEmail: document.getElementById('contactEmail').value,
-                paymentMethod: document.getElementById('paymentMethod').value
+                yeshivaName: document.getElementById('yeshivaName').value || '',
+                yeshivaAddress: document.getElementById('yeshivaAddress').value || '',
+                yeshivaEmail: document.getElementById('yeshivaEmail').value || '',
+                contactPhone: document.getElementById('contactPhone').value || '',
+                contactEmail: document.getElementById('contactEmail').value || '',
+                paymentMethod: document.getElementById('paymentMethod').value || ''
             };
 
             try {
+                // שימוש ב-fetch מותאם ל-Google Apps Script (no-cors) עם שליחת הטקסט הגולמי
                 await fetch(API_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'text/plain' }, // מונע בעיות CORS מול דפדפנים מחמירים
                     body: JSON.stringify(orderData)
                 });
 
-                alert("ההזמנה נקלטה בהצלחה! מייל סיכום נשלח אליך, לאומן ולאיש הקשר בישיבה.");
+                // מאחר ו-no-cors לא מחזיר תשובה קריאה ל-JS, אנחנו מניחים הצלחה אם הגענו לפה ללא זריקת שגיאה ברשת
+                alert("ההזמנה נקלטה במערכת בהצלחה! מייל סיכום נשלח כעת אליך, לאומן ולהנהלת המערכת.");
                 window.location.href = "index.html";
 
             } catch (error) {
                 console.error("Error submitting order:", error);
-                alert("חלה שגיאה בתקשורת עם השרת.");
+                alert("חלה שגיאה בשליחת הנתונים. אנא נסה שנית.");
                 submitBtn.disabled = false;
                 submitBtn.innerText = "אשר ושלח בקשת הזמנה";
             }
