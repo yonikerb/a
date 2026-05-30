@@ -4,52 +4,393 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>קעמפ-קליק | פלטפורמת אטרקציות מקצועית</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- פונט עברי איכותי -->
+    <link rel="preconnect" href="                            ">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="                                                           ;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Assistant', sans-serif; }
-        body { background-color: #fcfcfd; color: #1e293b; line-height: 1.7; font-size: 16px; text-align: center; }
-        a { text-decoration: none; color: inherit; transition: all 0.25s ease; }
-
-        /* אנימציית לוגו בכניסה */
-        #loader-wrapper {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #fcfcfd; display: flex; justify-content: center;
-            align-items: center; z-index: 9999; transition: opacity 0.5s ease;
+        /* אתחול ועיצוב גלובלי עם יישור מרכזי */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Assistant', sans-serif;
         }
-        #loader-logo { width: 150px; animation: growLogo 1s ease-in-out forwards; }
-        @keyframes growLogo {
-            0% { transform: scale(0.5); opacity: 0; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(1); opacity: 0; }
+
+        body {
+            background-color: #fcfcfd;
+            color: #1e293b;
+            line-height: 1.7;
+            font-size: 16px;
+            text-align: center; /* יישור דיפולטיבי למרכז עבור כל האתר */
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.25s ease;
         }
 
         /* סרגל ניווט */
-        header { background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; }
-        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; }
-        .nav-right { display: flex; align-items: center; gap: 45px; }
-        .logo-container img { height: 42px; display: block; object-fit: contain; }
-        .nav-menu { display: flex; list-style: none; gap: 30px; }
-        .nav-menu li a { color: #475569; font-weight: 500; padding: 4px 0; }
-        .nav-menu li a:hover { color: #0f172a; font-weight: 700; }
-        
-        .cart-btn { background-color: #ffffff; padding: 9px 20px; border-radius: 6px; border: 1px solid #cbd5e1; font-weight: 600; font-size: 14px; }
-        .cart-count { background-color: #0f172a; color: white; font-size: 11px; padding: 1px 6px; border-radius: 4px; margin-right: 5px; }
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-        /* Hero */
-        .hero { background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%); color: white; padding: 130px 20px; text-align: center; }
-        .hero h1 { font-size: 48px; font-weight: 800; margin-bottom: 24px; }
-        .hero p { font-size: 19px; margin-bottom: 40px; color: #94a3b8; max-width: 720px; margin-left: auto; margin-right: auto; }
-        .hero-btn { background-color: #d97706; color: white; padding: 14px 40px; border-radius: 6px; font-weight: 600; display: inline-block; }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+        }
 
-        /* About Section */
-        .about-section { max-width: 1200px; margin: 90px auto; padding: 0 20px; }
-        .banners-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin-top: 50px; }
-        .premium-banner { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 40px 35px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
-        .premium-banner.full-width { grid-column: span 2; }
-        .banner-icon-container { background-color: #f8fafc; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; border: 1px solid #f1f5f9; }
-        
-        footer { background-color: #0f172a; color: #64748b; text-align: center; padding: 35px 20px; margin-top: 120px; }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 45px;
+        }
 
-        @media (max-width: 768px) { .banners-grid { grid-template-columns: 1fr; } .premium-banner.full-width { grid-column: span 1; } }
+        .logo-container img {
+            height: 42px;
+            display: block;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .nav-menu li a {
+            color: #475569;
+            font-size: 15px;
+            font-weight: 500;
+            position: relative;
+            padding: 4px 0;
+            text-align: center;
+        }
+
+        .nav-menu li a:hover, .nav-menu li a.active {
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .nav-menu li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%); /* קו תחתי שמתרחב מהאמצע */
+            width: 0;
+            height: 2px;
+            background-color: #d97706;
+            transition: width 0.25s ease;
+        }
+
+        .nav-menu li a:hover::after, .nav-menu li a.active::after {
+            width: 100%;
+        }
+
+        /* אזור שמאל - הסל העליון */
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .cart-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #ffffff;
+            color: #0f172a;
+            padding: 9px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            justify-content: center;
+        }
+
+        .cart-btn:hover {
+            background-color: #f8fafc;
+            border-color: #94a3b8;
+        }
+
+        .cart-count {
+            background-color: #0f172a;
+            color: white;
+            font-size: 11px;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        /* אזור Hero */
+        .hero {
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 130px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 720px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        .hero p {
+            font-size: 19px;
+            margin-bottom: 40px;
+            color: #94a3b8;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        .hero-btn {
+            background-color: #d97706;
+            color: #ffffff;
+            padding: 14px 40px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.2);
+            display: inline-block;
+        }
+
+        .hero-btn:hover {
+            background-color: #b45309;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(217, 119, 6, 0.3);
+        }
+
+        /* אזור עלינו - מבנה גריד (2 ואז 1) מיושר למרכז */
+        .about-section {
+            max-width: 1200px;
+            margin: 90px auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+            text-align: center;
+        }
+
+        .section-header p {
+            color: #64748b;
+            font-size: 16px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* גריד לבאנרים */
+        .banners-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .premium-banner {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 40px 35px;
+            display: flex;
+            flex-direction: column; /* שינוי לטור כדי שהאלמנטים יסתדרו אנכית במרכז */
+            align-items: center;    /* מרכז את התוכן אנכית */
+            justify-content: center;
+            gap: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            text-align: center;
+        }
+
+        .premium-banner:hover {
+            box-shadow: 0 12px 30px -10px rgba(15, 23, 42, 0.06);
+            border-color: #cbd5e1;
+            transform: translateY(-2px);
+        }
+
+        .premium-banner.full-width {
+            grid-column: span 2;
+        }
+
+        .banner-icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8fafc;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%; /* אייקון עגול ומרכזי */
+            font-size: 28px;
+            border: 1px solid #f1f5f9;
+            flex-shrink: 0;
+        }
+
+        .banner-text {
+            text-align: center;
+            width: 100%;
+        }
+
+        .banner-text h3 {
+            font-size: 21px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .banner-text p {
+            font-size: 15px;
+            color: #475569;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto; /* מרכז את פסקה ברוחב מקסימלי */
+        }
+
+        /* רספונסיביות */
+        @media (max-width: 768px) {
+            .banners-grid {
+                grid-template-columns: 1fr;
+            }
+            .premium-banner.full-width {
+                grid-column: span 1;
+            }
+        }
+
+        /* תחתית הדף */
+        footer {
+            background-color: #0f172a;
+            color: #64748b;
+            text-align: center;
+            padding: 35px 20px;
+            font-size: 14px;
+            margin-top: 120px;
+            border-top: 1px solid #1e293b;
+        }
     </style>
+</head>
+<body>
+
+    <!-- סרגל ניווט פרימיום -->
+    <header>
+        <div class="nav-container">
+            <div class="nav-right">
+                <div class="logo-container">
+                    <a href="#"><img src="logo.png" alt="logo.png"></a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href=index.html">דף הבית</a></li>
+                    <li><a href="categories.html">קטגוריות אטרקציות</a></li>
+                 
+                    <li><a href="contact.html">יצירת קשר</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-left">
+                <a href="#" class="cart-btn">
+                    <span class="cart-icon">🛒</span>
+                    <span>הסל שלי</span>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- אזור תצוגה ראשי (Hero) -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>כל האטרקציות לקעמפים ואירועים תחת קורת גג אחת</h1>
+            <p>מערכת סינון והזמנות מתקדמת המאפשרת למארגנים ולמנהלי תוכניות לסגור את לו"ז הפעילויות בביטחון ובמהירות.</p>
+            <a href="categories.html" class="hero-btn">מעבר לקטלוג הקטגוריות המלא</a>
+        </div>
+    </section>
+
+    <!-- אזור אודות מיושר לחלוטין למרכז -->
+    <section class="about-section">
+        <div class="section-header">
+            <h2>אודות הפלטפורמה</h2>
+            <p>הסטנדרט החדש של תכנון וארגון אירועים לחניכים</p>
+        </div>
+        
+        <div class="banners-grid">
+            <!-- באנר 1 -->
+            <div class="premium-banner">
+                <div class="banner-icon-container">💼</div>
+                <div class="banner-text">
+                    <h3>ניסיון מקצועי וליווי מקיף</h3>
+                    <p>פיתחנו את המערכת מתוך הבנה מעמיקה של צורכי מנהלי הקעמפים. אנו מציעים רק ספקים שעברו סינון קפדני כדי להבטיח רמת ביצוע מושלמת בשטח.</p>
+                </div>
+            </div>
+
+            <!-- באנר 2 -->
+            <div class="premium-banner">
+                <div class="banner-icon-container">🎯</div>
+                <div class="banner-text">
+                    <h3>חדשנות ותוכן מותאם</h3>
+                    <p>הקטלוג שלנו מתעדכן באופן שוטף באטרקציות ובטכנולוגיות המובילות בשוק, תוך התאמה מדויקת לאופי האירוע, לגילאי החניכים ולדרישות הלו"ז שלכם.</p>
+                </div>
+            </div>
+
+            <!-- באנר 3 (רוחב מלא) -->
+            <div class="premium-banner full-width">
+                <div class="banner-icon-container">🛡️</div>
+                <div class="banner-text">
+                    <h3>בטיחות קפדנית והסמכות</h3>
+                    <p>אנו לא מתפשרים על שלומם של המשתתפים. כלל הציוד, המתקנים וההפעלות המופיעים באתר מחזיקים באישורים הנדרשים ומופעלים על ידי אנשי מקצוע מוסמכים בלבד, כדי שתוכלו להפיק את האירוע בראש שקט לגמרי ובביטחון מלא.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- תחתית הדף -->
+    <footer>
+        <p>© 2026 קעמפ-קליק - פתרונות טכנולוגיים מתקדמים לאירועים. כל הזכויות שמורות.</p>
+    </footer>
+
+</body>
+</html>
