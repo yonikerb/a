@@ -251,7 +251,7 @@
         // שם הקטגוריה לסינון בעמודה B בשיטס
         const CATEGORY_NAME = "מתנפחי ענק ומים"; 
 
-        // פונקציית המרה משודרגת לכל סוגי הקישורים של גוגל דרייב לקבלת נתיב תמונה ישיר
+        // פונקציית המרה חלופית ויציבה לכתובת thumbnail של גוגל דרייב לעקיפת חסימות חלונות/דפדפן
         function formatDriveImageUrl(url) {
             if (!url) return 'images/default-item.jpg';
             
@@ -270,7 +270,8 @@
                 }
                 
                 if (id) {
-                    return `https://docs.google.com/uc?export=view&id=${id}`;
+                    // נתיב ה-thumbnail המאובטח שמציג את התמונה ישירות בדפדפנים חיצוניים
+                    return `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
                 }
             }
             return url;
