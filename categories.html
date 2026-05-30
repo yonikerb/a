@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>קטגוריות אטרקציות | קעמפ-קליק</title>
+    
+    <!-- הוספת לוגו בלשונית הדפדפן (Favicon) -->
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <!-- פונט עברי איכותי -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* אתחול ועיצוב גלובלי עם יישור מרכזי */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Assistant', sans-serif;
+        }
+
+        body {
+            background-color: #fcfcfd;
+            color: #1e293b;
+            line-height: 1.7;
+            font-size: 16px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInPage 0.6s ease forwards;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.25s ease;
+        }
+
+        /* סרגל ניווט */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 45px;
+        }
+
+        .logo-container img {
+            height: 42px;
+            display: block;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .nav-menu li a {
+            color: #475569;
+            font-size: 15px;
+            font-weight: 500;
+            position: relative;
+            padding: 4px 0;
+            text-align: center;
+        }
+
+        .nav-menu li a:hover, .nav-menu li a.active {
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .nav-menu li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background-color: #d97706;
+            transition: width 0.25s ease;
+        }
+
+        .nav-menu li a:hover::after, .nav-menu li a.active::after {
+            width: 100%;
+        }
+
+        /* אזור שמאל - הסל העליון */
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .cart-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #ffffff;
+            color: #0f172a;
+            padding: 9px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            justify-content: center;
+        }
+
+        .cart-btn:hover {
+            background-color: #f8fafc;
+            border-color: #94a3b8;
+        }
+
+        .cart-count {
+            background-color: #0f172a;
+            color: white;
+            font-size: 11px;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        /* כותרת קטגוריות ראשית */
+        .categories-hero {
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .categories-hero h1 {
+            font-size: 38px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .categories-hero p {
+            font-size: 16px;
+            color: #94a3b8;
+            font-weight: 300;
+        }
+
+        /* אזור גריד הקטגוריות */
+        .catalog-section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        /* כרטיסיית קטגוריה מבוססת תמונת רקע */
+        .category-card {
+            border-radius: 12px;
+            height: 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                        box-shadow 0.3s ease;
+            animation: cardSlideUp 0.5s ease-out backwards;
+        }
+
+        /* שכבת כיסוי כהה מובנית מעל התמונה */
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.75) 100%);
+            transition: background 0.3s ease;
+            z-index: 1;
+        }
+
+        /* אפקט ריחוף על כרטיסיית התמונה */
+        .category-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px -10px rgba(15, 23, 42, 0.3);
+        }
+
+        .category-card:hover::before {
+            background: linear-gradient(180deg, rgba(217, 119, 6, 0.3) 0%, rgba(15, 23, 42, 0.85) 100%);
+        }
+
+        /* תוכן הטקסט מעל השכבה */
+        .category-content {
+            position: relative;
+            z-index: 2;
+            color: #ffffff;
+            padding: 20px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .category-content h3 {
+            font-size: 24px;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover .category-content h3 {
+            transform: scale(1.05);
+        }
+
+        .category-content p {
+            font-size: 14.5px;
+            color: #e2e8f0;
+            font-weight: 400;
+            max-width: 280px;
+            margin: 0 auto;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* השהיית אנימציה מדורגת */
+        .category-card:nth-child(1)  { animation-delay: 0.05s; }
+        .category-card:nth-child(2)  { animation-delay: 0.10s; }
+        .category-card:nth-child(3)  { animation-delay: 0.15s; }
+        .category-card:nth-child(4)  { animation-delay: 0.20s; }
+        .category-card:nth-child(5)  { animation-delay: 0.25s; }
+        .category-card:nth-child(6)  { animation-delay: 0.30s; }
+        .category-card:nth-child(7)  { animation-delay: 0.35s; }
+        .category-card:nth-child(8)  { animation-delay: 0.40s; }
+        .category-card:nth-child(9)  { animation-delay: 0.45s; }
+        .category-card:nth-child(10) { animation-delay: 0.50s; }
+        .category-card:nth-child(11) { animation-delay: 0.55s; }
+        .category-card:nth-child(12) { animation-delay: 0.60s; }
+        .category-card:nth-child(13) { animation-delay: 0.65s; }
+        .category-card:nth-child(14) { animation-delay: 0.70s; }
+        .category-card:nth-child(15) { animation-delay: 0.75s; }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes cardSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* רספונסיביות */
+        @media (max-width: 1024px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-right {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            .category-card {
+                height: 200px;
+            }
+        }
+
+        /* תחתית הדף */
+        footer {
+            background-color: #0f172a;
+            color: #64748b;
+            text-align: center;
+            padding: 35px 20px;
+            font-size: 14px;
+            margin-top: 100px;
+            border-top: 1px solid #1e293b;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- סרגל ניווט פרימיום -->
+    <header>
+        <div class="nav-container">
+            <div class="nav-right">
+                <div class="logo-container">
+                    <a href="index.html"><img src="logo.png" alt="logo.png"></a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">דף הבית</a></li>
+                    <li><a href="categories.html" class="active">קטגוריות אטרקציות</a></li>
+                    <li><a href="#">יצירת קשר</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-left">
+                <a href="#" class="cart-btn">
+                    <span class="cart-icon">🛒</span>
+                    <span>הסל שלי</span>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- אזור כותרת קטגוריות קומפקטי -->
+    <section class="categories-hero">
+        <h1>קטלוג קטגוריות האטרקציות</h1>
+        <p>בחרו את תחום הפעילות המבוקש וצפו במגוון פתרונות ההפקה המובילים שלנו</p>
+    </section>
+
+    <!-- גוף הקטלוג -->
+    <main class="catalog-section">
+        <div class="categories-grid">
+            
+            <!-- קטגוריה 1 -->
+            <a href="category-inflatables.html" class="category-card" style="background-image: url('images/category-inflatables.jpg');">
+                <div class="category-content">
+                    <h3>מתנפחי ענק ומים</h3>
+                    <p>מתנפחי אתגרונים, חומות טיפוס ומגלשות מים ענקיות לכל הגילאים.</p>
+                </div>
+            </a>
+
+            <!-- קטגוריה 2 -->
+            <a href="category-simulation.html" class="category-card" style="background-image: url('images/category-simulation.jpg');">
+                <div class="category-content">
+                    <h3>סימולטורים ומולטימדיה</h3>
+                    <p>עמדות מציאות מדומה, סימולטורי נהיגה ומסכי ענק אינטראקטיביים.</p>
+                </div>
+            </a>
+
+            <!-- קטגוריה 3 -->
+            <a href="category-water-sports.html" class="category-card" style="background-image: url('images/category-water-sports.jpg');">
+                <div class="category-content">
+                    <h3>אטרקציות מים ושיט</h3>
+                    <p>קיאקים, סירות פדלים, בננות ופעילויות מים מודרכות בבטיחות מלאה.</p>
+                </div>
+            </a>
+
+            <!-- קטגוריה 4 -->
+            <a href="category-workshops.html" class="category-card" style="background-image: url('images/category-workshops.jpg');">
+                <div class="category-content">
+                    <h3>סדנאות יצירה ואומנות</h3>
+                    <p>סדנאות עץ, אלקטרוניקה, אומנות שימושית ויצירה חווייתית לחניכים.</p>
+                </div>
+            </a>
+
+            <!-- קטגוריה 5 -->
+            <a href="category-field-trips.html" class="category-card" style="background-image: url('images/category-field-trips.jpg');">
+                <div class="category-content">
+                    <h3>ניווט ושטח ODT</h3>
+                    <p>משחקי ניווט דיגיטליים, משימות קבוצתיות וגיבוש שטח מאתגר.</p>
+                </div>
+            </a>
+
+            <!-- קטגוריה 6 -->
+            <a href="category-laser-tag.html" class="category-card" style="background-image: url('images/category-laser-tag.jpg');">
+                <div class="category-content">
+                    <h3>לייזר טאג ופיינטבול</h3>
+                    <p>זירות לחימה ניידות, ציוד מתקדם ומערכות תאורה חכמות בשטח שלכם.</p>
+                </div>
+            </a>
+
+            <!-- קטגוריה 7 -->
+            <a href="category-food-stalls.html" class="category-card" style="background-image: url('images/category-food-stalls.jpg');">
+                <div class="category-content">
+                    <h3>דוכני מזון וכיבוד</h3>
+                    <p>וופל בלגי, פופקורן, סוכר, ברד ומגוון פתרונות קולינריים כשרים למהדרין.</p>
+                </div>
+            </a>
+
+            <!-- קטגוריה 8 -->
+            <a href="category-escape-rooms.html" class="category-card" style="background-image: url('images/category-escape-rooms.jpg');">
+                <div class="category-content">
+                    <h3>חדרי בריחה ניידים</h3>
+                    <p>ערכות בריחה קבוצתיות, תיבות אוצר ומשימות חשיבה מותאמות אישית.</p>
+                </div>
+            </a>
+
+            <!-- קטגוריה 9 -->
+            <a href="category-giant-games.html" class="category-card" style="background-image: url('images/category-giant-games.jpg');">
+                <div class="category-content">
+                    <h3>משחקי רצפה וענק</h3>
+                    <p>משחקי שולחן מעץ, שחמט ענק, ג'נגה ומשחקי חברה נוסטלגיים בגרסת ענק.</p>
+                </div>
+            </a>
+
+            <!-- קטגוריה 10 -->
+            <a href="category-extreme.html" class="category-card" style="background-image: url('images/category-extreme.jpg');">
+                <div class="category-content">
+                    <h3>אקסטרים וקירות טיפוס</h3>
+                    <p>מתקני אומגה, פארק חבלים נייד וקירות טיפוס מקצועיים עם רתמות בטיחות.</p>
+                </div>
+            </a>
+
+            <!-- קטגוריה 11 -->
+            <a href="category-science.html" class="category-card" style="background-image: url('images/category-science.jpg');">
+                <div class="category-content">
+                    <h3>מדע וטכנולוגיה חווייתית</h3>
+                    <p>ניסויים מרתקים, הדפסות תלת-ממד וסדנאות רובוטיקה מעשיות לחניכים.</p>
+                </div>
+            </a>
+
+            <!-- קטגוריה 12 -->
+            <a href="category-music.html" class="category-card" style="background-image: url('images/category-music.jpg');">
+                <div class="category-content">
+                    <h3>מעגלי מתופפים ומוזיקה</h3>
+                    <p>סדנאות קצב, מעגלי תיפוף חווייתיים ולימוד כלי הקשה בשילוב הגברה.</p>
+                </div>
+            </a>
+
+            <!-- קטגוריה 13 -->
+            <a href="category-wheels.html" class="category-card" style="background-image: url('images/category-wheels.jpg');">
+                <div class="category-content">
+                    <h3>רכבי שטח וגלגלים</h3>
+                    <p>מסלולי אופניים, קרטינג פדלים, ורכבי שטח חשמליים מוגבלים לבטיחות מירבית.</p>
+                </div>
+            </a>
+
+            <!-- קטגוריה 14 -->
+            <a href="category-shows.html" class="category-card" style="background-image: url('images/category-shows.jpg');">
+                <div class="category-content">
+                    <h3>הופעות ותיאטרון תוכן</h3>
+                    <p>מופעי קסמים, תיאטרון בובות חינוכי, ומופעי טלפתיה מרתקים המותאמים לציבור שלנו.</p>
+                </div>
+            </a>
+
+            <!-- קטגוריה 15 -->
+            <a href="category-camping.html" class="category-card" style="background-image: url('images/category-camping.jpg');">
+                <div class="category-content">
+                    <h3>ציוד קמפינג ולינת שטח</h3>
+                    <p>השכרת אוהלים, שקי שינה, פתרונות תאורת שטח ומערכות שטח לוגיסטיות לקעמפ.</p>
+                </div>
+            </a>
+
+        </div>
+    </main>
+
+    <!-- תחתית הדף -->
+    <footer>
+        <p>© 2026 קעמפ-קליק - פתרונות טכנולוגיים מתקדמים לאירועים. כל הזכויות שמורות.</p>
+    </footer>
+
+</body>
+</html>
