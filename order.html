@@ -43,7 +43,6 @@
         h2 { font-size: 26px; font-weight: 800; color: #0f172a; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
         h3 { font-size: 18px; font-weight: 700; color: #1e293b; margin-top: 20px; margin-bottom: 10px; }
 
-        /* תיבת סיכום פרטי האומן והאטרקציה מהדף הקודם */
         .attraction-summary {
             background: #f1f5f9;
             padding: 20px;
@@ -163,7 +162,6 @@
                     <input type="text" id="yeshivaAddress" required placeholder="עיר, רחוב ומספר">
                 </div>
 
-
                 <div class="form-group">
                     <label for="contactPhone">מספר טלפון ליצירת קשר:</label>
                     <input type="tel" id="contactPhone" required placeholder="לדוגמה: 050-1234567">
@@ -195,13 +193,12 @@
     </div>
 
     <script>
-        // הקישור המלא של ה-Web App שלך מגוגל
-        const API_URL = "https://script.google.com/macros/s/AKfycbxraYZHM6uQ3qWEPmvFzIQDiOpFAXbxVlGSu8aF6MdUXWt1HBUreyx1wJPC8elXXg4/exec";
+        // שים לב לעדכן פה את הקישור החדש שקיבלת מה-Deploy בגוגל סקריפט!
+        const API_URL = "https://script.google.com/macros/s/AKfycbwgmVIzgn5LtedYptn-dqy2CT2M3xSUNoFp3pSoATLyjDzdFSwRQQwJwiETACqMYyZ8/exec";
 
         let singlePrice = 0;
         let groupPrice = 0;
 
-        // טעינת כל הפרמטרים שהגיעו מהדף הקודם ב-URL והצגתם על המסך
         window.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
             
@@ -212,7 +209,6 @@
             singlePrice = parseFloat(params.get('singlePrice')) || 0;
             groupPrice = parseFloat(params.get('groupPrice')) || 0;
             
-            // הצגת פורמט מחיר יפה בתיבת המידע
             if (singlePrice && groupPrice) {
                 document.getElementById('summary-prices').innerText = `₪${singlePrice} ליחיד / ₪${groupPrice} לקבוצה`;
             } else {
@@ -222,10 +218,9 @@
             calculateTotalCost();
         });
 
-        // חישוב העלות בזמן אמת לפי כמות משתתפים - מוגן מפני ערכי null
         function calculateTotalCost() {
             const inputEl = document.getElementById('participantCount');
-            if (!inputEl) return 0; // מניעת קריסה אם האלמנט טרם נטען ב-DOM
+            if (!inputEl) return 0;
 
             const count = parseInt(inputEl.value) || 0;
             let finalPrice = 0;
@@ -243,7 +238,6 @@
             return finalPrice;
         }
 
-        // שליחת הטופס לשרת
         async function handleOrderSubmit(event) {
             event.preventDefault();
             
@@ -253,7 +247,6 @@
 
             const params = new URLSearchParams(window.location.search);
             
-            // איסוף הנתונים המדויק
             const orderData = {
                 action: "placeOrder",
                 title: params.get('title') || '',
@@ -264,22 +257,19 @@
                 totalPrice: calculateTotalCost(),
                 yeshivaName: document.getElementById('yeshivaName').value || '',
                 yeshivaAddress: document.getElementById('yeshivaAddress').value || '',
-                yeshivaEmail: document.getElementById('yeshivaEmail').value || '',
                 contactPhone: document.getElementById('contactPhone').value || '',
                 contactEmail: document.getElementById('contactEmail').value || '',
                 paymentMethod: document.getElementById('paymentMethod').value || ''
             };
 
             try {
-                // שימוש ב-fetch מותאם ל-Google Apps Script (no-cors) עם שליחת הטקסט הגולמי
                 await fetch(API_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: { 'Content-Type': 'text/plain' }, // מונע בעיות CORS מול דפדפנים מחמירים
+                    headers: { 'Content-Type': 'text/plain' },
                     body: JSON.stringify(orderData)
                 });
 
-                // מאחר ו-no-cors לא מחזיר תשובה קריאה ל-JS, אנחנו מניחים הצלחה אם הגענו לפה ללא זריקת שגיאה ברשת
                 alert("ההזמנה נקלטה במערכת בהצלחה! מייל סיכום נשלח כעת אליך, לאומן ולהנהלת המערכת.");
                 window.location.href = "index.html";
 
