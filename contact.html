@@ -4,58 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>צור קשר | קעמפ-קליק</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* עיצוב אחיד לשאר האתר */
+        /* עיצוב גלובלי משותף */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Assistant', sans-serif; }
-        body { background-color: #f8fafc; color: #1e293b; padding-bottom: 60px; }
-        .container { max-width: 750px; margin: 40px auto; padding: 0 20px; }
+        body { background-color: #fcfcfd; color: #1e293b; padding-bottom: 0; }
+        a { text-decoration: none; color: inherit; }
+
+        /* סרגל ניווט (מהאינדקס) */
+        header { background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; }
+        .nav-right { display: flex; align-items: center; gap: 45px; }
+        .logo-container img { height: 42px; object-fit: contain; }
+        .nav-menu { display: flex; list-style: none; gap: 30px; }
+        .nav-menu li a { color: #475569; font-weight: 500; }
+        .nav-menu li a:hover { color: #0f172a; font-weight: 700; }
+        .cart-btn { background-color: #ffffff; padding: 9px 20px; border-radius: 6px; border: 1px solid #cbd5e1; font-weight: 600; }
+
+        /* תוכן הטופס */
+        .container { max-width: 750px; margin: 60px auto; padding: 0 20px; }
         .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-        h2 { font-size: 26px; font-weight: 800; color: #0f172a; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
-        .form-group { margin-bottom: 18px; }
+        h2 { font-size: 26px; font-weight: 800; color: #0f172a; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; text-align: center; }
+        .form-group { margin-bottom: 18px; text-align: right; }
         label { display: block; font-size: 14.5px; font-weight: 600; color: #475569; margin-bottom: 6px; }
         input, textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 15px; outline: none; }
-        input:focus, textarea:focus { border-color: #d97706; box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1); }
         .submit-btn { background-color: #0f172a; color: white; border: none; width: 100%; padding: 14px; font-size: 16px; font-weight: 700; border-radius: 6px; cursor: pointer; }
         .submit-btn:hover { background-color: #d97706; }
+
+        /* פוטר */
+        footer { background-color: #0f172a; color: #64748b; text-align: center; padding: 35px 20px; font-size: 14px; margin-top: 120px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="card">
-        <h2>צור קשר עם הנהלת האתר</h2>
-        <form id="contactForm">
-            <div class="form-group">
-                <label>שם מלא / שם הישיבה</label>
-                <input type="text" id="name" required placeholder="הזן שם...">
+    <header>
+        <div class="nav-container">
+            <div class="nav-right">
+                <div class="logo-container">
+                    <a href="index.html"><img src="logo.png" alt="logo"></a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">דף הבית</a></li>
+                    <li><a href="categories.html">קטגוריות אטרקציות</a></li>
+                    <li><a href="contact.html">יצירת קשר</a></li>
+                </ul>
             </div>
-            <div class="form-group">
-                <label>טלפון ליצירת קשר</label>
-                <input type="tel" id="phone" required placeholder="050-1234567">
+            <div class="nav-left">
+                <a href="#" class="cart-btn">🛒 הסל שלי (0)</a>
             </div>
-            <div class="form-group">
-                <label>כתובת מייל</label>
-                <input type="email" id="email" required placeholder="example@mail.com">
-            </div>
-            <div class="form-group">
-                <label>תוכן ההודעה</label>
-                <textarea id="message" required placeholder="כתוב כאן את פנייתך..."></textarea>
-            </div>
-            <button type="submit" class="submit-btn" id="submitBtn">שלח הודעה</button>
-        </form>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>צור קשר עם הנהלת האתר</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label>שם מלא / שם הישיבה</label>
+                    <input type="text" id="name" required placeholder="הזן שם...">
+                </div>
+                <div class="form-group">
+                    <label>טלפון ליצירת קשר</label>
+                    <input type="tel" id="phone" required placeholder="050-1234567">
+                </div>
+                <div class="form-group">
+                    <label>כתובת מייל</label>
+                    <input type="email" id="email" required placeholder="example@mail.com">
+                </div>
+                <div class="form-group">
+                    <label>תוכן ההודעה</label>
+                    <textarea id="message" required placeholder="כתוב כאן את פנייתך..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">שלח הודעה</button>
+            </form>
+        </div>
     </div>
-</div>
+
+    <footer>
+        <p>© 2026 קעמפ-קליק - פתרונות טכנולוגיים מתקדמים לאירועים. כל הזכויות שמורות.</p>
+    </footer>
 
 <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbw9j7exSTcJ8vAxM7JSYqt6W1FUiHM_QaSEwzul-S5uiAMYA-o_7a_nV89zEI05fb5GTQ/exec";
-
     document.getElementById('contactForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
         btn.innerText = "שולח...";
         btn.disabled = true;
-
         const data = {
             action: "contact",
             name: document.getElementById('name').value,
@@ -63,14 +98,8 @@
             email: document.getElementById('email').value,
             message: document.getElementById('message').value
         };
-
         try {
-            await fetch(API_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'text/plain' },
-                body: JSON.stringify(data)
-            });
+            await fetch(API_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(data) });
             alert("תודה רבה! פנייתך התקבלה ונציג יחזור אליך בהקדם.");
             window.location.href = "index.html";
         } catch (error) {
