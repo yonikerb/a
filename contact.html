@@ -6,12 +6,11 @@
     <title>צור קשר | קעמפ-קליק</title>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* עיצוב גלובלי משותף */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Assistant', sans-serif; }
         body { background-color: #fcfcfd; color: #1e293b; padding-bottom: 0; }
         a { text-decoration: none; color: inherit; }
 
-        /* סרגל ניווט (מהאינדקס) */
+        /* סרגל ניווט */
         header { background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; }
         .nav-right { display: flex; align-items: center; gap: 45px; }
@@ -21,10 +20,13 @@
         .nav-menu li a:hover { color: #0f172a; font-weight: 700; }
         .cart-btn { background-color: #ffffff; padding: 9px 20px; border-radius: 6px; border: 1px solid #cbd5e1; font-weight: 600; }
 
+        /* פס כותרת חדש */
+        .page-header { background-color: #0f172a; color: white; padding: 40px 20px; text-align: center; }
+        .page-header h1 { font-size: 32px; font-weight: 800; }
+
         /* תוכן הטופס */
-        .container { max-width: 750px; margin: 60px auto; padding: 0 20px; }
+        .container { max-width: 750px; margin: 40px auto; padding: 0 20px; }
         .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-        h2 { font-size: 26px; font-weight: 800; color: #0f172a; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; text-align: center; }
         .form-group { margin-bottom: 18px; text-align: right; }
         label { display: block; font-size: 14.5px; font-weight: 600; color: #475569; margin-bottom: 6px; }
         input, textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 15px; outline: none; }
@@ -32,7 +34,7 @@
         .submit-btn:hover { background-color: #d97706; }
 
         /* פוטר */
-        footer { background-color: #0f172a; color: #64748b; text-align: center; padding: 35px 20px; font-size: 14px; margin-top: 120px; }
+        footer { background-color: #0f172a; color: #64748b; text-align: center; padding: 35px 20px; font-size: 14px; margin-top: 80px; }
     </style>
 </head>
 <body>
@@ -55,9 +57,12 @@
         </div>
     </header>
 
+    <div class="page-header">
+        <h1>צור קשר</h1>
+    </div>
+
     <div class="container">
         <div class="card">
-            <h2>צור קשר עם הנהלת האתר</h2>
             <form id="contactForm">
                 <div class="form-group">
                     <label>שם מלא / שם הישיבה</label>
@@ -84,30 +89,30 @@
         <p>© 2026 קעמפ-קליק - פתרונות טכנולוגיים מתקדמים לאירועים. כל הזכויות שמורות.</p>
     </footer>
 
-<script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbw9j7exSTcJ8vAxM7JSYqt6W1FUiHM_QaSEwzul-S5uiAMYA-o_7a_nV89zEI05fb5GTQ/exec";
-    document.getElementById('contactForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const btn = document.getElementById('submitBtn');
-        btn.innerText = "שולח...";
-        btn.disabled = true;
-        const data = {
-            action: "contact",
-            name: document.getElementById('name').value,
-            phone: document.getElementById('phone').value,
-            email: document.getElementById('email').value,
-            message: document.getElementById('message').value
-        };
-        try {
-            await fetch(API_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(data) });
-            alert("תודה רבה! פנייתך התקבלה ונציג יחזור אליך בהקדם.");
-            window.location.href = "index.html";
-        } catch (error) {
-            alert("שגיאה בשליחה, אנא נסה שנית.");
-            btn.disabled = false;
-            btn.innerText = "שלח הודעה";
-        }
-    });
-</script>
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbw9j7exSTcJ8vAxM7JSYqt6W1FUiHM_QaSEwzul-S5uiAMYA-o_7a_nV89zEI05fb5GTQ/exec";
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "שולח...";
+            btn.disabled = true;
+            const data = {
+                action: "contact",
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                message: document.getElementById('message').value
+            };
+            try {
+                await fetch(API_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(data) });
+                alert("תודה רבה! פנייתך התקבלה ונציג יחזור אליך בהקדם.");
+                window.location.href = "index.html";
+            } catch (error) {
+                alert("שגיאה בשליחה, אנא נסה שנית.");
+                btn.disabled = false;
+                btn.innerText = "שלח הודעה";
+            }
+        });
+    </script>
 </body>
 </html>
