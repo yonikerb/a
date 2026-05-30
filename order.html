@@ -141,7 +141,7 @@
                 
                 <h3>1. חישוב עלות לפי כמות משתתפים</h3>
                 <div class="form-group">
-                    <label for="participantCount">מספר משתתפים באירוע:</label>
+                    <label for="participantCount">מספר משתתפים :</label>
                     <input type="number" id="participantCount" min="1" required placeholder="הזן כמות משתתפים" oninput="calculateTotalCost()">
                 </div>
 
@@ -168,7 +168,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="contactEmail">מייל אישי של איש הקשר המזמין:</label>
+                    <label for="contactEmail">מייל:</label>
                     <input type="email" id="contactEmail" required placeholder="contact@example.com">
                 </div>
 
@@ -194,7 +194,7 @@
 
     <script>
         // שים לב לעדכן פה את הקישור החדש שקיבלת מה-Deploy בגוגל סקריפט!
-        const API_URL = "https://script.google.com/macros/s/AKfycbwgmVIzgn5LtedYptn-dqy2CT2M3xSUNoFp3pSoATLyjDzdFSwRQQwJwiETACqMYyZ8/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbxjXT1VJiq1feJvyHbM3ZMuCFh260MIE-TIabbMZcBr6Qt8sST4S6k-xKjPqd9HkKI7/exec";
 
         let singlePrice = 0;
         let groupPrice = 0;
@@ -270,7 +270,7 @@
                     body: JSON.stringify(orderData)
                 });
 
-                alert("ההזמנה נקלטה במערכת בהצלחה! מייל סיכום נשלח כעת אליך, לאומן ולהנהלת המערכת.");
+                alert("ההזמנה נקלטה במערכת בהצלחה! מייל סיכום נשלח כעת אליך, .");
                 window.location.href = "index.html";
 
             } catch (error) {
