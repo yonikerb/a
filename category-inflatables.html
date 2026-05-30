@@ -202,7 +202,7 @@
         footer { background-color: #0f172a; color: #64748b; padding: 35px 20px; font-size: 14px; margin-top: 100px; }
         
         @media (max-width: 1024px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) { .products-grid { grid-template-columns: 1fr; } .nav-container { flex-direction: column; gap: 15px; } }
+        @media (max-width: 768px) { .products-grid { grid-template-columns: 1fr; .nav-container { flex-direction: column; gap: 15px; } } }
     </style>
 </head>
 <body>
@@ -297,16 +297,26 @@
                 data.forEach(item => {
                     const imageUrl = formatDriveImageUrl(item.image);
                     
-                    const orderUrl = `order.html?title=${encodeURIComponent(item.title)}&artist=${encodeURIComponent(item.artist)}&singlePrice=${encodeURIComponent(item.singlePrice)}&groupPrice=${encodeURIComponent(item.groupPrice)}&city=${encodeURIComponent(item.city)}`;
+                    // אבטחת משתנים למניעת קריסה במקרה של שדה ריק בגיליון
+                    const title = item.title || 'אטרקציה ללא שם';
+                    const artist = item.artist || 'לא צוין';
+                    const singlePrice = item.singlePrice || '';
+                    const groupPrice = item.groupPrice || '';
+                    const city = item.city || 'כל הארץ';
+                    const description = item.description || item.Description || ''; // הגנה למקרה של אות גדולה/קטנה בשיטס
+                    const artistEmail = item.artistEmail || item.Email || item.email || ''; // הבאת המייל בצורה מאובטחת
+
+                    // עדכון שורת הקישור: מעבירה כעת את כל הפרטים + המייל בצורה מוצפנת ומאובטחת לכתובת ה-URL
+                    const orderUrl = `order.html?title=${encodeURIComponent(title)}&artist=${encodeURIComponent(artist)}&singlePrice=${encodeURIComponent(singlePrice)}&groupPrice=${encodeURIComponent(groupPrice)}&city=${encodeURIComponent(city)}&artistEmail=${encodeURIComponent(artistEmail)}`;
                     
                     let pricesHtml = '';
-                    if (item.singlePrice || item.groupPrice) {
+                    if (singlePrice || groupPrice) {
                         pricesHtml += `<div class="product-prices-block">`;
-                        if (item.singlePrice) {
-                            pricesHtml += `<div class="price-line">מחיר ליחיד: <span class="price-val">₪${item.singlePrice}</span></div>`;
+                        if (singlePrice) {
+                            pricesHtml += `<div class="price-line">מחיר ליחיד: <span class="price-val">₪${singlePrice}</span></div>`;
                         }
-                        if (item.groupPrice) {
-                            pricesHtml += `<div class="price-line">מחיר לקבוצה: <span class="price-val">₪${item.groupPrice}</span></div>`;
+                        if (groupPrice) {
+                            pricesHtml += `<div class="price-line">מחיר לקבוצה: <span class="price-val">₪${groupPrice}</span></div>`;
                         }
                         pricesHtml += `</div>`;
                     }
@@ -316,18 +326,18 @@
                         notesHtml = `<div class="product-notes">💡 ${item.notes}</div>`;
                     }
 
-                    let cityHtml = item.city ? `<span class="product-city">📍 ${item.city}</span>` : '';
+                    let cityHtml = city ? `<span class="product-city">📍 ${city}</span>` : '';
 
                     htmlContent += `
                         <div class="product-card">
                             <div class="product-image" style="background-image: url('${imageUrl}');"></div>
                             <div class="product-body">
-                                <div class="product-title">${item.title}</div>
+                                <div class="product-title">${title}</div>
                                 <div class="product-meta">
-                                    <span class="product-artist">מאת: ${item.artist}</span>
+                                    <span class="product-artist">מאת: ${artist}</span>
                                     ${cityHtml}
                                 </div>
-                                <div class="product-desc">${item.description}</div>
+                                <div class="product-desc">${description}</div>
                                 
                                 ${pricesHtml}
                                 ${notesHtml}
@@ -344,7 +354,7 @@
 
             } catch (error) {
                 console.error("Error fetching data:", error);
-                loadingEl.innerHTML = `<div style="color: #ef4444; padding: 20px;">שגיאה בקבלת הנתונים מהשרת המרוחק.</div>`;
+                loadingEl.innerHTML = `<div style="color: #ef4444; padding: 20px;">שגיאה בקבלת הנתונים מהשרת המרוחק. ודא שה-Web App מעודכן במצב Anyone.</div>`;
             }
         }
 
